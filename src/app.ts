@@ -2,8 +2,8 @@ import { DBContext, RedisContext } from 'tymon';
 import BaseApp from './base_app';
 import AuthController from './controllers/auth_controller';
 import ProfileController from './controllers/profile_controller';
-import GraphQL from './graphql';
-import QuoteModel from './models/quote_model';
+import MajorModel from './models/major_model';
+import FacultyModel from './models/faculty_model';
 
 class App extends BaseApp {
     public constructor(port: number) {
@@ -16,7 +16,8 @@ class App extends BaseApp {
         this.addController(ProfileController);
 
         /** Register Auto Generated Crud Controller */
-        this.addControllerFromModel(QuoteModel);
+        this.addControllerFromModel(MajorModel);
+        this.addControllerFromModel(FacultyModel);
 
     }
 

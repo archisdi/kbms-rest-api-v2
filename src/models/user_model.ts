@@ -1,9 +1,8 @@
-import { BaseProps, BasicType } from 'src/typings/common';
+import { BaseProps } from 'src/typings/common';
 import { HttpError } from 'tymon';
 import RepoFactory from '../factories/repository';
 import Auth from '../utils/auth';
 import { BaseModel } from './base/base_model';
-import { PostModel, PostProperties } from './post_model';
 
 export interface UserProperties extends BaseProps {
     name: string;
@@ -12,8 +11,6 @@ export interface UserProperties extends BaseProps {
     refresh_token: string;
     token_validity: string;
     clearance: number;
-
-    posts?: PostProperties[];
 }
 
 export class UserModel extends BaseModel<UserProperties> {
@@ -40,8 +37,7 @@ export class UserModel extends BaseModel<UserProperties> {
             clearance: data.clearance,
             created_at: data.created_at,
             updated_at: data.updated_at,
-            deleted_at: data.deleted_at,
-            posts: data.posts
+            deleted_at: data.deleted_at
         });
     }
 
@@ -56,8 +52,7 @@ export class UserModel extends BaseModel<UserProperties> {
             clearance: data.clearance,
             created_at: data.created_at,
             updated_at: data.updated_at,
-            deleted_at: data.deleted_at,
-            posts: []
+            deleted_at: data.deleted_at
         });
     }
 
@@ -116,10 +111,6 @@ export class UserModel extends BaseModel<UserProperties> {
 
     public set token_validity(value: string) {
         this.props.token_validity = value;
-    }
-
-    public get posts(): PostModel[] {
-        return this.props.posts?.map((post) => PostModel.buildFromSql(post)) || [];
     }
 
     public async save({ cache }: { cache: boolean } = { cache: true }): Promise<void> {

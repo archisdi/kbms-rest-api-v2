@@ -64,13 +64,6 @@ const model = (DataTypes) => ({
     type: DataTypes.BOOLEAN,
     allowNull: false
   },
-  age: {
-    type: DataTypes.VIRTUAL,
-    get() {
-      let birthdate = moment(this.get('birthdate'));
-      return moment().diff(birthdate, 'years');
-    }
-  },
   created_at: {
       type: DataTypes.DATE,
       allowNull: true
