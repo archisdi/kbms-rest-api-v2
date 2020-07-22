@@ -1,21 +1,21 @@
-const model = (dataTypes) => ({
+const model = (DataTypes) => ({
     id: {
-        type: dataTypes.UUID,
-        defaultValue: dataTypes.UUIDV4,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true
     },
     name: {
-        type: dataTypes.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false
     },
     username: {
-        type: dataTypes.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false,
         unique: true
     },
     password: {
-        type: dataTypes.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false
     },
     clearance: {
@@ -24,23 +24,23 @@ const model = (dataTypes) => ({
         defaultValue: 5
     },
     refresh_token: {
-        type: dataTypes.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: true
     },
     token_validity: {
-        type: dataTypes.DATE,
+        type: DataTypes.DATE,
         allowNull: true
     },
     created_at: {
-        type: dataTypes.DATE,
+        type: DataTypes.DATE,
         allowNull: true
     },
     updated_at: {
-        type: dataTypes.DATE,
+        type: DataTypes.DATE,
         allowNull: true
     },
     deleted_at: {
-        type: dataTypes.DATE,
+        type: DataTypes.DATE,
         allowNull: true
     }
 });
@@ -56,13 +56,6 @@ module.exports = {
     options,
     model,
     default: function (sequelize, dataTypes) {
-        const member = sequelize.define( 'User', model(dataTypes), options);
-        member.associate = (models) => {
-            // member.hasMany(models.Post, {
-            //     sourceKey: 'id',
-            //     targetKey: 'author_id'
-            // });
-        };
-        return member;
+        return sequelize.define( 'User', model(dataTypes), options);
     }
 }

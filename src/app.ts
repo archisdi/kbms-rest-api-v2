@@ -1,7 +1,6 @@
 import { DBContext, RedisContext } from 'tymon';
 import BaseApp from './base_app';
 import AuthController from './controllers/auth_controller';
-import PostController from './controllers/post_controller';
 import ProfileController from './controllers/profile_controller';
 import GraphQL from './graphql';
 import QuoteModel from './models/quote_model';
@@ -15,19 +14,10 @@ class App extends BaseApp {
         /** Register Controller */
         this.addController(AuthController);
         this.addController(ProfileController);
-        this.addController(PostController);
 
         /** Register Auto Generated Crud Controller */
         this.addControllerFromModel(QuoteModel);
 
-        /** Register GraphQL */
-        const GraphQLModule = new GraphQL({
-            enable_graphiql: true /** ui interface */,
-            is_protected: true /** jwt protected */
-        });
-
-        /** GraphQL Endpoint */
-        this.app.use('/graphql', GraphQLModule.getInstance());
     }
 
     public setSingletonModules(): void {
