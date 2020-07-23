@@ -3,8 +3,8 @@ export interface LoginRequest {
         username: string;
         password: string;
     };
-    query: {};
-    params: {};
+    query: any;
+    params: any;
 }
 
 export interface LoginReponse {
@@ -13,17 +13,15 @@ export interface LoginReponse {
     expires_in: number;
 }
 
-export interface UpdatePostRequest {
+export interface RefreshRequest {
     body: {
-        title?: string;
-        content?: string;
+        refresh_token: string;
     };
-    query: {};
-    params: {
-        id: string;
-    };
+    query: any;
+    params: any;
 }
 
-export interface UpdatePostResponse {
-    id: string;
+export interface RefreshReponse {
+    token: string;
+    expires_in: number;
 }

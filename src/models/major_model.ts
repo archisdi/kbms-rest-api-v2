@@ -19,6 +19,8 @@ export class MajorModel extends BaseModel<MajorProps> {
 
     public static modelName = 'Major';
 
+    public static fillable = ['id', 'faculty_id', 'name'];
+
     public static repo = RepoFactory.getSql<MajorModel, MajorProps>(MajorModel);
 
     public static buildFromSql(data: MajorProps): MajorModel {

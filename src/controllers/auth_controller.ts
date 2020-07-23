@@ -1,4 +1,4 @@
-import { LoginReponse, LoginRequest } from 'src/typings/endpoints';
+import { LoginReponse, LoginRequest, RefreshReponse, RefreshRequest } from 'src/typings/endpoints';
 import { HttpError } from 'tymon';
 import UserLoggedInEvent from '../events/user_logged_in_event';
 import { UserModel } from '../models/user_model';
@@ -38,7 +38,16 @@ export default class AuthController extends BaseController {
         // Wrap in try/catch block if transaction is needed
     }
 
+    public async refresh(data: RefreshRequest, context: IContext): Promise<RefreshReponse> {
+        const { lifetime, token } = await UserModel.refreshJwtToken(data.body.refresh_token);
+        return {
+            expires_in: lifetime,
+            token
+        };
+    }
+
     public setRoutes(): void {
         this.addRoute<LoginReponse>('post', '/login', this.login, { validate: SCHEMA.LOGIN });
+        this.addRoute<RefreshReponse>('post', '/refresh', this.refresh, { validate: SCHEMA.REFRESH });
     }
 }

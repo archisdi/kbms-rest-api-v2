@@ -2,6 +2,7 @@ import { BaseProps } from 'src/typings/common';
 import { HttpError } from 'tymon';
 import RepoFactory from '../factories/repository';
 import Auth from '../utils/auth';
+import { isNotExpireDate } from '../utils/helpers';
 import { BaseModel } from './base/base_model';
 
 export interface UserProperties extends BaseProps {
@@ -56,10 +57,17 @@ export class UserModel extends BaseModel<UserProperties> {
         });
     }
 
-    public signJwtToken(password: string): { token: string; lifetime: number } {
-        if (!Auth.validatePassword(password, this.password)) {
+    public static async refreshJwtToken(refreshToken: string): Promise<{ token: string; lifetime: number }> {
+        const user = await this.repo.findOne({ refresh_token: refreshToken });
+        if (!user || !isNotExpireDate(user.token_validity)) throw HttpError.UnauthorizedError('TOKEN_INVALID');
+        return user.signJwtToken();
+    }
+
+    public signJwtToken(password?: string): { token: string; lifetime: number } {
+        if (password && !Auth.validatePassword(password, this.password)) {
             throw HttpError.UnauthorizedError('credential not match', 'CREDENTIAL_NOT_MATCH');
         }
+
         const { token, valid_until } = Auth.generateRefreshToken();
         this.refresh_token = token;
         this.token_validity = valid_until;

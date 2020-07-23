@@ -1,6 +1,8 @@
 import * as moment from 'moment';
 import { IObject } from 'src/typings/common';
 
+export const isNotExpireDate = (validity: string): boolean => moment() < moment(validity);
+
 export const parseDataObject = (object: IObject): IObject => JSON.parse(JSON.stringify(object));
 
 export const offset = (page = 1, per_page = 10): number => (page - 1) * per_page;
@@ -53,5 +55,6 @@ export default {
     isEmptyObject,
     trimObjectKey,
     stringifyObjectKey,
-    spitTrim
+    spitTrim,
+    isNotExpireDate
 };

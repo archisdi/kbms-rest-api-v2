@@ -11,14 +11,10 @@ class App extends BaseApp {
     }
 
     public setControllers(): void {
-        /** Register Controller */
         this.addController(AuthController);
         this.addController(ProfileController);
-
-        /** Register Auto Generated Crud Controller */
         this.addControllerFromModel(MajorModel);
         this.addControllerFromModel(FacultyModel);
-
     }
 
     public setSingletonModules(): void {

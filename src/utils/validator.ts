@@ -5,8 +5,9 @@ import { COMMON_ERRORS } from './constant';
 
 export enum SCHEMA {
     LOGIN = 'login',
+    REFRESH = 'refresh',
     CREATE_POST = 'create_post',
-    UPDATE_POST = 'update_post'
+    UPDATE_POST = 'update_post',
 }
 
 export const COMMON_SCHEME = {
@@ -22,6 +23,11 @@ const schemas: IObject<Joi.ObjectSchema> = {
         body: Joi.object({
             username: Joi.string().required(),
             password: Joi.string().required()
+        }).required()
+    }),
+    [SCHEMA.REFRESH]: Joi.object({
+        body: Joi.object({
+            refresh_token: Joi.string().required()
         }).required()
     }),
     [SCHEMA.CREATE_POST]: Joi.object({

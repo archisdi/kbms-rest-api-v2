@@ -15,6 +15,8 @@ export class FacultyModel extends BaseModel<FacultyProps> {
 
     public static modelName = 'Faculty';
 
+    public static fillable = ['id', 'name'];
+
     public static repo = RepoFactory.getSql<FacultyModel, FacultyProps>(FacultyModel);
 
     public static buildFromSql(data: FacultyProps): FacultyModel {

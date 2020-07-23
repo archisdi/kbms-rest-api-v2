@@ -15,7 +15,10 @@ export default class ProfileController extends BaseController {
             user = await UserModel.repo.findOneOrFail({ username: context.username });
         }
 
-        return user.toJson();
+        return {
+            name: user.name,
+            username: user.username,
+        };
     }
 
     public setRoutes(): void {
