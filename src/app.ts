@@ -1,9 +1,10 @@
 import { DBContext, RedisContext } from 'tymon';
 import BaseApp from './base_app';
 import AuthController from './controllers/auth_controller';
+import DashboardController from './controllers/dashboard_controller';
 import ProfileController from './controllers/profile_controller';
-import MajorModel from './models/major_model';
 import FacultyModel from './models/faculty_model';
+import MajorModel from './models/major_model';
 
 class App extends BaseApp {
     public constructor(port: number) {
@@ -13,6 +14,7 @@ class App extends BaseApp {
     public setControllers(): void {
         this.addController(AuthController);
         this.addController(ProfileController);
+        this.addController(DashboardController);
         this.addControllerFromModel(MajorModel);
         this.addControllerFromModel(FacultyModel);
     }
