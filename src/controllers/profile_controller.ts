@@ -22,10 +22,6 @@ export default class ProfileController extends BaseController {
     }
 
     public setRoutes(): void {
-        /** router level caching */
         this.addRoute('get', '/', this.getProfile, { cache: true });
-
-        /** nested controllers */
-        // this.addChildController(Controller);
     }
 }

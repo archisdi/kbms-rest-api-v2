@@ -8,7 +8,8 @@ export enum SCHEMA {
     REFRESH = 'refresh',
     CREATE_POST = 'create_post',
     UPDATE_POST = 'update_post',
-    DASHBOARD_BIRTHDAY = 'dashboard_birthday'
+    DASHBOARD_BIRTHDAY = 'dashboard_birthday',
+    MEMBER_LIST = 'member_list'
 }
 
 export const COMMON_SCHEME = {
@@ -52,6 +53,18 @@ const schemas: IObject<Joi.ObjectSchema> = {
         query: Joi.object({
             month: Joi.number().positive().integer().valid(VALID_MONTHS).required(),
             day: Joi.number().positive().integer().allow(null)
+        }).required()
+    }),
+    [SCHEMA.MEMBER_LIST]: Joi.object({
+        query: Joi.object({
+            page: Joi.number().integer().positive().default(1).optional(),
+            per_page: Joi.number().integer().positive().default(10).optional(),
+            sort: Joi.string().optional().default('-created_at'),
+            name: Joi.string().allow(null, ''),
+            class_of: Joi.number().integer().positive().allow(null, ''),
+            is_alumni: Joi.boolean().allow(null, ''),
+            faculty_id: Joi.string().allow(null, ''),
+            major_id: Joi.string().allow(null, '')
         }).required()
     })
 };

@@ -60,6 +60,67 @@ export class MemberModel extends BaseModel<MemberProperties> {
     public async save(): Promise<void> {
         return MemberModel.repo.upsert({ id: this.id }, this.toJson());
     }
+
+    public get name(): string {
+        return this.props.name;
+    }
+
+    public get nim(): string {
+        return this.props.nim;
+    }
+
+    public get class_of(): number | null {
+        return this.props.class_of;
+    }
+
+    public get is_alumni(): boolean {
+        return this.props.is_alumni;
+    }
+
+    public get major_name(): string {
+        return this.props.major?.name || '-';
+    }
+
+    public get faculty_name(): string {
+        return this.props.major?.faculty?.name || '-';
+    }
+
+    public get contact(): string | null {
+        return this.props.contact;
+    }
+
+    public get birthplace(): string | null {
+        return this.props.birthplace;
+    }
+
+    public get birthdate(): string | null {
+        return this.props.birthdate;
+    }
+
+    public get bandung_address(): string | null {
+        return this.props.bandung_address;
+    }
+
+    public get origin_address(): string | null {
+        return this.props.origin_address;
+    }
+
+    public get email(): string | null {
+        return this.props.email;
+    }
+
+    public get line_id(): string | null {
+        return this.props.line_id;
+    }
+
+    public get instagram(): string | null {
+        return this.props.instagram;
+    }
+
+    public get age(): number | null {
+        return this.props.age || null;
+    }
+
 }
 
 export default MemberModel;

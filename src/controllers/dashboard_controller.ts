@@ -18,17 +18,17 @@ class DashboardController extends BaseController {
     public async birthdays(data: IData, context: IContext): Promise<any> {
         const { query } = data;
 
-        const members = await MemberService.getBirthdays(query);
-        const normalized = members.map(m => {
-            const props = m.toJson();
-            return {
-                name: props.name,
-                birthdate: props.birthdate
-            };
-        });
+        const members = await MemberService.getBirthdays(query)
+            .then(raws => raws.map(m => {
+                const props = m.toJson();
+                return {
+                    name: props.name,
+                    birthdate: props.birthdate
+                };
+            }));
 
         return {
-            members: normalized
+            members
         };
     }
 

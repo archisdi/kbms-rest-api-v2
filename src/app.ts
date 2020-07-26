@@ -2,6 +2,7 @@ import { DBContext, RedisContext } from 'tymon';
 import BaseApp from './base_app';
 import AuthController from './controllers/auth_controller';
 import DashboardController from './controllers/dashboard_controller';
+import MemberController from './controllers/member_controller';
 import ProfileController from './controllers/profile_controller';
 import FacultyModel from './models/faculty_model';
 import MajorModel from './models/major_model';
@@ -15,6 +16,8 @@ class App extends BaseApp {
         this.addController(AuthController);
         this.addController(ProfileController);
         this.addController(DashboardController);
+        this.addController(MemberController);
+
         this.addControllerFromModel(MajorModel);
         this.addControllerFromModel(FacultyModel);
     }
