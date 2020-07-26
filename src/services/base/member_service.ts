@@ -3,7 +3,7 @@ import MemberModel from '../../models/member_model';
 import BaseService from './base/service';
 
 class MemberService extends BaseService {
-    public static async getBirthdays(month: number, day?: number): Promise<MemberModel[]> {
+    public static async getBirthdays({ month, day }: { month: number, day?: number }): Promise<MemberModel[]> {
         const Seq = DBContext.getInstance().ORMProvider;
         const conditions: any = {};
         conditions[Seq.Op.and] = [];

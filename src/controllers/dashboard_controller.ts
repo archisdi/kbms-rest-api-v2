@@ -1,4 +1,7 @@
 import JwtMiddleware from '../middlewares/jwt_auth';
+import FacultyModel from '../models/faculty_model';
+import MajorModel from '../models/major_model';
+import MemberModel from '../models/member_model';
 import MemberService from '../services/base/member_service';
 import { IContext, IData } from '../typings/common';
 import { SCHEMA } from '../utils/validator';
@@ -15,15 +18,37 @@ class DashboardController extends BaseController {
     public async birthdays(data: IData, context: IContext): Promise<any> {
         const { query } = data;
 
-        const members = await MemberService.getBirthdays(query.month, query.day);
+        const members = await MemberService.getBirthdays(query);
+        const normalized = members.map(m => {
+            const props = m.toJson();
+            return {
+                name: props.name,
+                birthdate: props.birthdate
+            };
+        });
 
         return {
-            members: members.map(m => m.toJson())
+            members: normalized
+        };
+    }
+
+    public async counter(data: IData, context: IContext): Promise<any> {
+        const [memberCount, facultyCount, majorCount] = await Promise.all([
+            MemberModel.repo.count({}),
+            FacultyModel.repo.count({}),
+            MajorModel.repo.count({})
+        ]);
+
+        return {
+            members: memberCount,
+            faculties: facultyCount,
+            majors: majorCount
         };
     }
 
     public setRoutes(): void {
         this.addRoute('get', '/birthday', this.birthdays, { validate: SCHEMA.DASHBOARD_BIRTHDAY });
+        this.addRoute('get', '/counter', this.counter, { cache: true });
     }
 }
 
