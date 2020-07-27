@@ -53,10 +53,16 @@ class DashboardController extends BaseController {
         return summary;
     }
 
+    public async classSummary(data: IData, context: IContext): Promise<any> {
+        const summary = await MemberModel.repo.countDistinct('class_of');
+        return summary;
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/birthday', this.birthdays, { validate: SCHEMA.DASHBOARD_BIRTHDAY });
         this.addRoute('get', '/counter', this.counter, { cache: true });
         this.addRoute('get', '/faculty', this.facultySummary, { cache: true });
+        this.addRoute('get', '/class', this.classSummary, { cache: true });
     }
 }
 

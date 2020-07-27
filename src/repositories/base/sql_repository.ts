@@ -118,6 +118,14 @@ export default class SQLRepo<ModelClass extends BaseModel, Props extends BasePro
         return db.model[this.modelName].count({ where: conditions as any });
     }
 
+    public async countDistinct(field: string): Promise<{[s:string]: any; count: number}[]> {
+        const db = SQLRepo.getInstance();
+        return db.model[this.modelName].count({
+            group: [field],
+            attributes: [field]
+        }) as any;
+    }
+
     public async paginate(
         conditions: Partial<Props>,
         { page = 1, per_page = 10, sort = DEFAULT.SORT, attributes }: QueryOptions
