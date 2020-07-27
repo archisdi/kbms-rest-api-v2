@@ -6,6 +6,7 @@ import MemberService from '../services/base/member_service';
 import { IContext, IData } from '../typings/common';
 import { SCHEMA } from '../utils/validator';
 import BaseController from './base/base_controller';
+import FacultyRepository from '../repositories/faculty_repository';
 
 class DashboardController extends BaseController {
     public constructor() {
@@ -46,9 +47,16 @@ class DashboardController extends BaseController {
         };
     }
 
+    public async facultySummary(data: IData, context: IContext): Promise<any> {
+        const facultyRepo = new FacultyRepository();
+        const summary = await facultyRepo.countDistinctMembers();
+        return summary;
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/birthday', this.birthdays, { validate: SCHEMA.DASHBOARD_BIRTHDAY });
         this.addRoute('get', '/counter', this.counter, { cache: true });
+        this.addRoute('get', '/faculty', this.facultySummary, { cache: true });
     }
 }
 
