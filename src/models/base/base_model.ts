@@ -100,4 +100,8 @@ export abstract class BaseModel<P extends BaseProps = BaseProps> {
     public async validate(): Promise<void> {
         throw new Error('model validation not implemented');
     }
+
+    public async delete(): Promise<void> {
+        throw new Error('model delete not implemented');
+    }
 }

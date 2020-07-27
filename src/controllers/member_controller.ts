@@ -38,9 +38,48 @@ class MemberController extends BaseController {
         return MemberTransformer.MemberDetail(member);
     }
 
+    public async memberCreate(data: IData, context: IContext): Promise<any> {
+        const { body } = data;
+
+        const member = MemberModel.create(body);
+        await member.validate();
+        await member.save();
+
+        return member.toJson();
+    }
+
+    public async memberUpdate(data: IData, context: IContext): Promise<any> {
+        const { body, params: { id } } = data;
+
+        const member = await new MemberRepository().findOneWithIdOrNim(id);
+        if (!member)
+            throw HttpError.NotFoundError('MEMBER_NOT_FOUND');
+
+        await member.update(body);
+        await member.validate();
+        await member.save();
+
+        return member.toJson();
+    }
+
+    public async memberDelete(data: IData, context: IContext): Promise<any> {
+        const { body, params: { id } } = data;
+
+        const member = await new MemberRepository().findOneWithIdOrNim(id);
+        if (!member)
+            throw HttpError.NotFoundError('MEMBER_NOT_FOUND');
+
+        await member.delete();
+
+        return;
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/', this.memberList, { validate: SCHEMA.MEMBER_LIST });
+        this.addRoute('post', '/', this.memberCreate);
         this.addRoute('get', '/:id', this.memberDetail);
+        this.addRoute('put', '/:id', this.memberUpdate);
+        this.addRoute('delete', '/:id', this.memberDelete);
     }
 }
 
