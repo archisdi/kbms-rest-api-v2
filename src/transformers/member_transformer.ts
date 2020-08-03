@@ -10,6 +10,7 @@ class MemberTransformer {
                 nim: member.nim,
                 class_of: member.class_of,
                 is_alumni: member.is_alumni,
+                major_name: member.major_name,
                 created_at: member.created_at
             })),
             pagination

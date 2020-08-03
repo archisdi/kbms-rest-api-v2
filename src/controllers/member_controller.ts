@@ -20,7 +20,8 @@ class MemberController extends BaseController {
         const { query } = data;
 
         const conditions = MemberService.generatePaginateQuery(query);
-        const { meta, data: members } = await MemberModel.repo.paginate(conditions, query);
+        const memberRepo = new MemberRepository();
+        const { meta, data: members } = await memberRepo.paginateDetailed(conditions, query);
 
         return MemberTransformer.MemberList(members, meta);
     }

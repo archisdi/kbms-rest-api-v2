@@ -31,6 +31,8 @@ export default class AuthController extends BaseController {
         await UserLoggedInEvent.dispatch({ user: user.toJson() });
 
         return {
+            name: user.name,
+            role: 'Admin',
             token: token,
             refresh_token: user.refresh_token,
             expires_in: lifetime
